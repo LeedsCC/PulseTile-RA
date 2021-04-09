@@ -1,34 +1,24 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from "redux"
 
-import showHeadings from "./showHeadingsReducer";
-import createCustomReducer from "./createCustomReducer";
-import httpErrorReducer from "./httpErrorReducer";
+import showHeadings from "./showHeadingsReducer"
+import createCustomReducer from "./createCustomReducer"
+import httpErrorReducer from "./httpErrorReducer"
 
-import {
-    SYNOPSIS_ALLERGIES_ACTION,
-    SYNOPSIS_CONTACTS_ACTION,
-    SYNOPSIS_MEDICATIONS_ACTION,
-    SYNOPSIS_PROBLEMS_ACTION
-} from "../actions/synopsisActions";
-import { INITIALIZE_ACTION } from "../actions/initializeAction";
-import { DEMOGRAPHICS_ACTION } from "../actions/demographicsAction";
-import { SHOW_MODE_ACTION } from "../actions/showModeAction";
+import { INITIALIZE_ACTION } from "../actions/initializeAction"
+import { DEMOGRAPHICS_ACTION } from "../actions/demographicsAction"
 
 // LINK TO NON-CORE CUSTOM REDUCERS
-import nonCoreReducers from "../../version/reducers";
+import nonCoreReducers from "../../version/reducers"
+import accessibilityReducer from "./accessibilityReducer"
 
 const coreReducers = {
-    allergiesSynopsis: createCustomReducer(SYNOPSIS_ALLERGIES_ACTION, "data.synopsis"),
-    contactsSynopsis: createCustomReducer(SYNOPSIS_CONTACTS_ACTION, "data.synopsis"),
-    medicationsSynopsis: createCustomReducer(SYNOPSIS_MEDICATIONS_ACTION, "data.synopsis"),
-    problemsSynopsis: createCustomReducer(SYNOPSIS_PROBLEMS_ACTION, "data.synopsis"),
-    initialize: createCustomReducer(INITIALIZE_ACTION, "data"),
-    demographics: createCustomReducer(DEMOGRAPHICS_ACTION, "data.demographics"),
-    httpErrors: httpErrorReducer,
-    showMode: createCustomReducer(SHOW_MODE_ACTION, "data"),
-    showHeadings,
-};
+  initialize: createCustomReducer(INITIALIZE_ACTION, "data"),
+  demographics: createCustomReducer(DEMOGRAPHICS_ACTION, "data.demographics"),
+  httpErrors: httpErrorReducer,
+  showHeadings,
+  accessibility: accessibilityReducer,
+}
 
-const reducers = Object.assign({}, coreReducers, nonCoreReducers);
+const reducers = Object.assign({}, coreReducers, nonCoreReducers)
 
-export default combineReducers(reducers);
+export default combineReducers(reducers)

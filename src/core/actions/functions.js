@@ -5,15 +5,15 @@
  * @param base
  * @param optional
  */
-export function createRequestTypes(base, optional) {
-    for (let index in optional) {
-        optional[index] = base + '_' + index;
-    }
+export function createRequestTypes(base, optional = {}) {
+  for (let index in optional) {
+    optional[index] = base + "_" + index
+  }
 
-    return {
-        REQUEST: base + '_REQUEST',
-        SUCCESS: base + '_SUCCESS',
-        FAILURE: base + '_FAILURE',
-        ...optional,
-    };
+  return {
+    REQUEST: base + "_REQUEST",
+    SUCCESS: base + "_SUCCESS",
+    FAILURE: base + "_FAILURE",
+    ...optional,
+  }
 }

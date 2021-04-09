@@ -1,37 +1,46 @@
-import get from "lodash/get";
-import DeepMerge from 'deepmerge';
+import get from "lodash/get"
+import DeepMerge from "deepmerge"
 
-import { createMuiTheme } from '@material-ui/core/styles';
-import { themeImages } from "../../version/config/theme.config";
+import { createMuiTheme } from "@material-ui/core/styles"
+import { themeImages } from "../../version/config/theme.config"
 
-export const ITEMS_PER_PAGE = 10;
+export const ITEMS_PER_PAGE = 10
 
 const defaultLightPalette = {
-    type: 'light',
-    mainColor: "#0D672F",
-    dangerColor: "#da534f",
-    viewButton: "#30ad57",
-    disabledColor: "#e9e4e4",
-    borderColor: "#e5e5e5",
-    paperColor: "#fff",
-    toolbarColor: "#e5e5e5",
-    fontColor: "#000",
-};
+  type: "light",
+  mainColor: "#0D672F",
+  dangerColor: "#da534f",
+  viewButton: "#30ad57",
+  disabledColor: "#e9e4e4",
+  borderColor: "#e5e5e5",
+  paperColor: "#fff",
+  toolbarColor: "#e5e5e5",
+  fontColor: "#000",
+}
 
 const defaultDarkPalette = {
-    type: 'dark',
-    mainColor: "#000",
-    dangerColor: "#000",
-    viewButton: "#000",
-    disabledColor: "#e9e4e4",
-    borderColor: "#000",
-    paperColor: "#fff",
-    fontColor: "#000",
-    toolbarColor: "#fff",
-    background: "#fff",
-    text: "#000",
-    divider: "#000",
-};
+  type: "dark",
+  mainColor: "#000",
+  dangerColor: "#000",
+  viewButton: "#000",
+  disabledColor: "#e9e4e4",
+  borderColor: "#000",
+  paperColor: "#fff",
+  fontColor: "#000",
+  toolbarColor: "#fff",
+  background: {
+    default: "#fff",
+    paper: "#fff",
+  },
+  text: {
+    primary: "#000",
+    secondary: "#000",
+    disabled: "#000",
+  },
+  // background: "#fff",
+  // text: "#000",
+  // divider: "#000",
+}
 
 /**
  * This function defined background-rule for Patient Summary panels and for table headings
@@ -43,18 +52,14 @@ const defaultDarkPalette = {
  * @return {string}
  */
 function getBackground(isContrastMode, themeColor, imageName) {
-    const cardBackgroundImage = get(themeImages, imageName, null);
-    let result = themeColor;
-    if (cardBackgroundImage) {
-        result = `url(${cardBackgroundImage}) 0 0 repeat`;
-    }
-    return (isContrastMode) ? "#000" : result;
+  let result = themeColor
+  return isContrastMode ? "#000" : result
 }
 
 function getCurrentPalette(isContrastMode) {
-    return isContrastMode
-        ? DeepMerge(defaultDarkPalette, window.config.darkPalette)
-        : DeepMerge(defaultLightPalette, window.config.lightPalette);
+  return isContrastMode
+    ? DeepMerge(defaultDarkPalette, window.config.darkPalette)
+    : DeepMerge(defaultLightPalette, window.config.lightPalette)
 }
 
 /**
@@ -63,90 +68,129 @@ function getCurrentPalette(isContrastMode) {
  * @author Bogdan Shcherban <bsc@piogroup.net>
  */
 export function getCurrentTheme(isContrastMode) {
-    const backgroundImage = isContrastMode ? null : get(themeImages, 'backgroundImage', null);
-    const palette = getCurrentPalette(isContrastMode);
-    return createMuiTheme({
-        palette: palette,
-        typography: {
-            fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
-            fontSize: 14,
+  const backgroundImage = isContrastMode ? null : get(themeImages, "backgroundImage", null)
+  const palette = getCurrentPalette(isContrastMode)
+  return createMuiTheme({
+    palette: palette,
+    typography: {
+      fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
+      fontSize: 14,
+    },
+    tableHeader: {
+      tableHeaderBlock: {
+        background: getBackground(isContrastMode, palette.mainColor, "tableHeaderImage"),
+      },
+    },
+    patientSummaryPanel: {
+      container: {
+        background: `url(${backgroundImage})`,
+      },
+      topBlock: {
+        background: getBackground(isContrastMode, palette.mainColor, "cardBackgroundImage"),
+      },
+    },
+    cardBackground: {
+      topBlock: {
+        background: getBackground(isContrastMode, palette.mainColor, "cardBackgroundImage"),
+      },
+    },
+    overrides: {
+      MuiInput: {
+        root: {
+          border: `2px solid ${palette.inputBorderColor}`,
+          paddingLeft: "5px",
+          paddingRight: "5px",
+          "&.Mui-focused": {
+            boxShadow: `0px 0px 0px 4px ${palette.highlightColor}`,
+          },
+          "&.Mui-disabled": {
+            border: `2px solid ${palette.disabledFontColor}`,
+          },
         },
-        tableHeader: {
-            tableHeaderBlock: {
-                background: getBackground(isContrastMode, palette.mainColor, 'tableHeaderImage'),
-            },
+        input: {
+          "&:focus": {
+            backgroundColor: "inherit !important",
+          },
         },
-        patientSummaryPanel: {
-            container: {
-                background: `url(${backgroundImage})`,
-            },
-            topBlock: {
-                background: getBackground(isContrastMode, palette.mainColor, 'cardBackgroundImage'),
-            }
+        underline: {
+          "&:before": {
+            display: "none",
+          },
+          "&:after": {
+            display: "none",
+          },
         },
-        cardBackground: {
-            topBlock: {
-                background: getBackground(isContrastMode, palette.mainColor, 'cardBackgroundImage'),
-            }
+      },
+      MuiFormLabel: {
+        root: {
+          lineHeight: 1.5,
+          "&.Mui-focused": {
+            color: palette.fontColor,
+          },
         },
-        overrides: {
-            MuiInput: {
-                root: {
-                    border: `1px solid ${palette.borderColor}`,
-                }
-            },
-            MuiList: {
-                root: {
-                    backgroundColor: palette.paperColor,
-                }
-            },
-            MuiPaper: {
-                elevation1: {
-                    boxShadow: "none",
-                    backgroundColor: palette.paperColor,
-                }
-            },
-            MuiTable: {
-                root: {
-                    backgroundColor: palette.paperColor,
-                    border: `1px solid ${palette.borderColor}`,
-                }
-            },
-            MuiTableHead: {
-                root: {
-                    backgroundColor: isContrastMode ? palette.paperColor : palette.borderColor,
-                    color: isContrastMode ? palette.paperColor : palette.fontColor,
-                }
-            },
-            MuiTableRow: {
-                head: {
-                    height: 48,
-                }
-            },
-            MuiTableCell: {
-                head: {
-                    color: palette.fontColor,
-                    fontSize: 16,
-                    fontWeight: 800,
-                },
-                paddingNone: {
-                    paddingLeft: 10,
-                }
-            },
-            MuiTypography: {
-                root: {
-                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
-                    fontSize: 17,
-                },
-                body1: {
-                    fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
-                    fontSize: 14,
-                },
-                body2: {
-                    fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
-                    fontSize: 14,
-                }
-            },
-        }
-    });
+      },
+      MuiInputLabel: {
+        animated: {
+          marginLeft: 5,
+        },
+        shrink: {
+          "&.Mui-focused": {
+            transform: "translate(0, -4px) scale(0.75)",
+          },
+        },
+      },
+      MuiList: {
+        root: {
+          backgroundColor: palette.paperColor,
+        },
+      },
+      MuiPaper: {
+        elevation1: {
+          boxShadow: "none",
+          backgroundColor: palette.paperColor,
+        },
+      },
+      MuiTable: {
+        root: {
+          backgroundColor: palette.paperColor,
+          border: `1px solid ${palette.borderColor}`,
+        },
+      },
+      MuiTableHead: {
+        root: {
+          backgroundColor: isContrastMode ? palette.paperColor : palette.borderColor,
+          color: isContrastMode ? palette.paperColor : palette.fontColor,
+        },
+      },
+      MuiTableRow: {
+        head: {
+          height: 48,
+        },
+      },
+      MuiTableCell: {
+        head: {
+          color: palette.fontColor,
+          fontSize: 16,
+          fontWeight: 800,
+        },
+        paddingNone: {
+          paddingLeft: 10,
+        },
+      },
+      MuiTypography: {
+        root: {
+          fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+          fontSize: 17,
+        },
+        body1: {
+          fontFamily: '"HK Grotesk Regular", Arial, sans-serif',
+          fontSize: 14,
+        },
+        body2: {
+          fontFamily: '"HK Grotesk SemiBold", Arial, sans-serif',
+          fontSize: 14,
+        },
+      },
+    },
+  })
 }

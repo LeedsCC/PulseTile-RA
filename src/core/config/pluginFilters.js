@@ -1,4 +1,4 @@
-import nonCorePluginFilters from "../../version/config/pluginFilters";
+import nonCorePluginFilters from "../../version/config/pluginFilters"
 
 /**
  * This component returns array of fields for filtering
@@ -8,10 +8,10 @@ import nonCorePluginFilters from "../../version/config/pluginFilters";
  * @return {shape}
  */
 const corePluginFilters = {
-    // allergies: ['cause', 'reaction'],
-    // contacts: ['name', 'relationship'],
-    // problems: ['problem'],
-    // medications: ['name'],
-};
+  // allergies: ['cause', 'reaction'],
+  // contacts: ['name', 'relationship'],
+  // problems: ['problem'],
+  // medications: ['name'],
+}
 
-export default Object.assign({}, corePluginFilters, nonCorePluginFilters);
+export default Object.assign({}, corePluginFilters, nonCorePluginFilters)

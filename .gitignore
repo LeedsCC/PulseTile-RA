@@ -9,4 +9,4 @@ logs/
 default.conf
 nginx.conf
 
-run/
+run

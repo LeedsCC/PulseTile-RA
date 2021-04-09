@@ -1,12 +1,12 @@
-import React from "react";
-import Joyride from 'react-joyride';
+import React from "react"
+import Joyride from "react-joyride"
 
-import IconButton from '@material-ui/core/IconButton';
-import HelpIcon from '@material-ui/icons/Help';
-import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from "@material-ui/core/IconButton"
+import HelpIcon from "@material-ui/icons/Help"
+import Tooltip from "@material-ui/core/Tooltip"
 
-import { tourSteps, locale } from '../content';
-import toursStyles from "../styles";
+import { tourSteps, locale } from "../content"
+import toursStyles from "../styles"
 
 /**
  * This component returns button which run User Tour
@@ -19,32 +19,32 @@ import toursStyles from "../styles";
  * @constructor
  */
 const RunUserTour = ({ classes, runTour, shouldRunTour, callback }) => {
-    return (
-        <React.Fragment>
-            <Tooltip title="User Tour">
-                <IconButton
-                    id="icon-tour"
-                    className={classes.rightBlockButton}
-                    aria-haspopup="true"
-                    aria-label="Tour"
-                    color="inherit"
-                    onClick={ () => runTour() }>
-                    <HelpIcon />
-                </IconButton>
-            </Tooltip>
-            <Joyride
-                continuous
-                disableOverlayClose={true}
-                showSkipButton={true}
-                showProgress={true}
-                locale={locale}
-                steps={tourSteps}
-                run={shouldRunTour}
-                styles={toursStyles}
-                callback={callback}
-            />
-        </React.Fragment>
-    );
-};
+  return (
+    <React.Fragment>
+      <Tooltip title="User Tour">
+        <IconButton
+          id="icon-tour"
+          className={classes.rightBlockButton}
+          aria-haspopup="true"
+          aria-label="Tour"
+          onClick={() => runTour()}
+        >
+          <HelpIcon />
+        </IconButton>
+      </Tooltip>
+      <Joyride
+        continuous
+        disableOverlayClose={true}
+        showSkipButton={true}
+        showProgress={true}
+        locale={locale}
+        steps={tourSteps}
+        run={shouldRunTour}
+        styles={toursStyles}
+        callback={callback}
+      />
+    </React.Fragment>
+  )
+}
 
-export default RunUserTour;
+export default RunUserTour

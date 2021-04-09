@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import HelpIcon from '@material-ui/icons/Help';
+import React, { Component } from "react"
+import HelpIcon from "@material-ui/icons/Help"
 
 /**
  * This component returns link to the customer page
@@ -10,11 +10,11 @@ import HelpIcon from '@material-ui/icons/Help';
  * @constructor
  */
 const LinkToCustomer = ({ classes, homepage }) => {
-    return (
-        <a href={homepage.link} className={classes.rightBlockButton} target="_blank" aria-label="To Customer">
-            <HelpIcon />
-        </a>
-    );
-};
+  return (
+    <a href={homepage.link} className={classes.rightBlockButton} target="_blank" aria-label="To Customer">
+      <HelpIcon />
+    </a>
+  )
+}
 
-export default LinkToCustomer;
+export default LinkToCustomer
